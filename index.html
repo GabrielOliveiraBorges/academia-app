@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitApp - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <h1>🏋️ FITAPP</h1>
+        <p>Seu treino na palma da mão</p>
+      </div>
+
+      <div id="mensagemErro" class="mensagem-erro"></div>
+
+      <form id="formLogin">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="••••••" required>
+        </div>
+
+        <button type="submit" class="btn">Entrar</button>
+      </form>
+
+      <div class="login-dica">
+        <strong>💡 Contas de teste:</strong><br>
+        joao@email.com / 123456<br>
+        maria@email.com / 123456
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

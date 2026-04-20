@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitApp - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-logo">🏋️ FITAPP</div>
+    <div class="header-user">
+      <div class="avatar" id="avatarUsuario">?</div>
+      <span id="nomeUsuario">Carregando...</span>
+      <button type="button" class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="boas-vindas">
+      <h2 id="saudacao">Olá! 👋</h2>
+      <p>Pronto para mais um treino hoje?</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <h3>Total de Treinos</h3>
+        <div class="valor" id="totalTreinos">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Treinos Concluídos</h3>
+        <div class="valor" id="treinosConcluidos">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Último Treino</h3>
+        <div class="valor" id="ultimoTreino" style="font-size: 18px;">-</div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <h3>Meus Treinos</h3>
+      <button class="btn-novo" onclick="abrirModalNovo()">+ Novo Treino</button>
+    </div>
+
+    <div id="listaTreinos" class="treinos-grid">
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modalTreino">
+    <div class="modal">
+      <h3 id="tituloModal">Novo Treino</h3>
+      <form id="formTreino">
+        <button type="button" class="btn-novo" onclick="abrirModalNovo()">+ Novo Treino</button>
+        <input type="hidden" id="treinoId">
+        <div class="form-group">
+          <label>Nome do treino</label>
+          <input type="text" id="nomeTreino" required placeholder="Ex: Treino A - Peito">
+        </div>
+        <div class="form-group">
+          <label>Tipo</label>
+          <input type="text" id="tipoTreino" required placeholder="Ex: Peito/Tríceps">
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="descricaoTreino" rows="3" placeholder="Detalhes do treino..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Duração</label>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1">
+              <input type="number" id="duracaoHoras" min="0" max="5" value="1" placeholder="Horas">
+              <small style="color:#b0b0b0;font-size:12px">horas</small>
+            </div>
+            <div style="flex:1">
+              <input type="number" id="duracaoMinutos" min="0" max="59" value="0" placeholder="Minutos">
+              <small style="color:#b0b0b0;font-size:12px">minutos</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secundario" onclick="fecharModal()">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<div class="modal-overlay" id="modalDetalhes">
+  <div class="modal">
+    <h3 id="tituloDetalhes">Detalhes</h3>
+    <div id="conteudoDetalhes"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secundario" onclick="fecharDetalhes()">Fechar</button>
+      <button type="button" class="btn" onclick="marcarConcluido()">✓ Concluir Treino</button>
+    </div>
+  </div>
+</div>
+
+  <script src="js/home.js"></script>
+</body>
+
+</html>
