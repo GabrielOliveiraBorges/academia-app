@@ -1,80 +1,83 @@
-# 🏋️ FitApp - Sistema de Gerenciamento de Treino
+# 🏋️ FitApp - Mobile (React Native + Expo)
 
-Projeto acadêmico de um aplicativo web para gerenciar treinos de academia.
+Aplicativo **mobile** de gerenciamento de treinos de academia, feito em **React Native** com **Expo Go**, consumindo um backend **json-server**.
 
-## 📋 Requisitos atendidos
+## 📋 Stack
 
-- ✅ Modelagem das tabelas do banco (`database/schema.sql`)
-- ✅ Frontend de Login (`index.html`)
-- ✅ Backend Login com json-server (autenticação via `/usuarios`)
-- ✅ Tela Home inicial (`home.html`) com dashboard e estatísticas
-- ✅ Backend da Home com json-server (carrega treinos e histórico)
-- ✅ **Função funcional com backend:** CRUD completo de treinos (criar, listar, editar, excluir) + registro de treinos concluídos
+- **Frontend mobile:** React Native + Expo (SDK 52)
+- **Linguagem:** JavaScript (`.jsx`)
+- **Navegação:** React Navigation (Native Stack)
+- **Sessão:** AsyncStorage
+- **Backend:** json-server (lê e grava em `db.json`)
 
-## 🗂️ Estrutura do projeto
+## 🗂️ Estrutura
 
 ```
 academia-app/
-├── index.html          → Tela de login
-├── home.html           → Tela inicial (dashboard)
-├── db.json             → Banco de dados do json-server
-├── css/
-│   └── style.css       → Estilização do app
-├── js/
-│   ├── login.js        → Autenticação (consome API)
-│   └── home.js         → Dashboard + CRUD de treinos
+├── App.jsx                       → Entry point + navegação
+├── index.js                      → registerRootComponent
+├── app.json                      → Config Expo
+├── package.json
+├── babel.config.js
+├── db.json                       → Banco usado pelo json-server
+├── src/
+│   ├── api.jsx                   → Funções fetch para o backend
+│   ├── AuthContext.jsx           → Sessão (AsyncStorage)
+│   ├── styles.jsx                → Paleta de cores
+│   └── screens/
+│       ├── LoginScreen.jsx
+│       ├── HomeScreen.jsx        → Dashboard + lista de treinos
+│       ├── TreinoFormScreen.jsx  → Criar/editar treino
+│       ├── DetalhesScreen.jsx    → Exercícios + concluir treino
+│       └── ExercicioFormScreen.jsx
 ├── database/
-│   └── schema.sql      → Modelagem SQL (MySQL)
-└── README.md
+│   └── schema.sql                → Modelagem SQL (referência)
+└── web-legacy/                   → Versão web antiga (HTML/CSS/JS)
 ```
-
-## 🗄️ Modelo do Banco de Dados
-
-### Tabelas
-
-| Tabela | Descrição |
-|---|---|
-| `usuarios` | Alunos e personal trainers (id, nome, email, senha, tipo, peso, altura, objetivo) |
-| `exercicios` | Catálogo de exercícios (id, nome, grupo_muscular, equipamento, dificuldade) |
-| `treinos` | Treinos dos alunos (id, nome, tipo, duracao, usuario_id, personal_id) |
-| `treino_exercicios` | Relação N:N entre treinos e exercícios com séries/reps/carga |
-| `historico_treinos` | Registro de treinos executados (usuario_id, treino_id, data, duracao_real, avaliacao) |
-
-### Relacionamentos
-
-- `usuarios (1) ←→ (N) treinos` — um aluno tem vários treinos
-- `treinos (N) ←→ (N) exercicios` — via `treino_exercicios`
-- `usuarios (1) ←→ (N) historico_treinos` — histórico de execução
 
 ## 🚀 Como rodar
 
-### 1. Instalar o json-server (uma vez só)
+### Pré-requisitos
+
+- **Node.js 18+** (testado com 24.x)
+- **Expo Go** instalado no celular ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) / [iOS](https://apps.apple.com/app/expo-go/id982107779))
+- **PC e celular conectados ao MESMO Wi-Fi**
+
+### 1. Instalar dependências (uma vez só)
 
 ```bash
-npm install -g json-server
+npm install
 ```
 
-### 2. Iniciar o servidor (backend)
+### 2. Configurar o IP da sua máquina
 
-Na pasta do projeto:
+Abra `src/api.jsx` e troque o IP pelo IPv4 da sua máquina:
+
+```js
+export const API_URL = 'http://192.168.100.10:3000';
+```
+
+Para descobrir seu IP no Windows: rode `ipconfig` no terminal e procure o **Endereço IPv4** (geralmente `192.168.x.x`).
+
+> ⚠️ **Não use `localhost`** — o celular não enxerga `localhost` da sua máquina.
+
+### 3. Iniciar o backend (em um terminal)
 
 ```bash
-json-server --watch db.json --port 3000
+npm run api
 ```
 
-O backend estará rodando em `http://localhost:3000`. Endpoints disponíveis:
+Isso roda o json-server na porta 3000 ouvindo em todas as interfaces (`--host 0.0.0.0`), o que é necessário para o celular conseguir acessar.
 
-- `GET/POST/PUT/DELETE http://localhost:3000/usuarios`
-- `GET/POST/PUT/DELETE http://localhost:3000/treinos`
-- `GET/POST/PUT/DELETE http://localhost:3000/exercicios`
-- `GET/POST/PUT/DELETE http://localhost:3000/treino_exercicios`
-- `GET/POST/PUT/DELETE http://localhost:3000/historico_treinos`
+### 4. Iniciar o Expo (em outro terminal)
 
-### 3. Abrir o frontend
+```bash
+npm start
+```
 
-Abra o arquivo `index.html` no navegador (duplo clique) ou use a extensão **Live Server** do VS Code.
+Vai abrir um QR code no terminal. **Escaneie com o Expo Go** (Android) ou com a câmera (iOS) para abrir o app no celular.
 
-### 4. Contas para teste
+### 5. Contas para teste
 
 | E-mail | Senha | Tipo |
 |---|---|---|
@@ -84,17 +87,36 @@ Abra o arquivo `index.html` no navegador (duplo clique) ou use a extensão **Liv
 
 ## 🎯 Funcionalidades com backend
 
-1. **Login** — valida e-mail/senha consultando `/usuarios` no json-server
-2. **Dashboard** — carrega estatísticas (total de treinos, concluídos, último treino) de `/treinos` e `/historico_treinos`
-3. **Listar treinos** — GET em `/treinos?usuario_id={id}`
-4. **Criar treino** — POST em `/treinos`
-5. **Editar treino** — PUT em `/treinos/{id}`
-6. **Excluir treino** — DELETE em `/treinos/{id}`
-7. **Ver detalhes** — GET em `/treino_exercicios?treino_id={id}` + `/exercicios`
-8. **Concluir treino** — POST em `/historico_treinos`
+1. **Login** — valida e-mail/senha consultando `/usuarios`
+2. **Dashboard** — total de treinos, concluídos e último treino
+3. **Listar treinos** — `GET /treinos?usuario_id={id}`
+4. **Criar / Editar / Excluir treino** — `POST/PUT/DELETE /treinos`
+5. **Ver detalhes do treino** — exercícios via `/treino_exercicios` + catálogo `/exercicios`
+6. **Adicionar / Editar / Remover exercício** — `POST/PUT/DELETE /treino_exercicios`
+7. **Concluir treino** — `POST /historico_treinos`
+
+## 🐛 Problemas comuns
+
+**"Erro ao conectar com o servidor" no login**
+- Verifique se o `npm run api` está rodando.
+- Confira se o IP em `src/api.jsx` é o IPv4 atual da sua máquina (`ipconfig`).
+- Confirme que celular e PC estão no **mesmo Wi-Fi**.
+- O firewall do Windows pode estar bloqueando a porta 3000 — libere ou desative temporariamente.
+
+**Expo Go não abre o app**
+- Reinicie o Expo: `Ctrl+C` no terminal e `npm start` de novo.
+- No celular, no Expo Go, vá em "Enter URL manually" e cole a URL exibida no terminal (`exp://192.168.x.x:8081`).
+
+## 🗄️ Modelo do Banco
+
+Tabelas (ver `database/schema.sql`):
+- `usuarios` (id, nome, email, senha, tipo, peso, altura, objetivo)
+- `exercicios` (id, nome, grupo_muscular, equipamento, dificuldade)
+- `treinos` (id, nome, tipo, duracao, usuario_id, personal_id)
+- `treino_exercicios` (N:N entre treinos e exercicios, com séries/reps/carga)
+- `historico_treinos` (registros de execução)
 
 ## 📌 Observações
 
-- A autenticação é simplificada (sem criptografia de senha / JWT) por ser um projeto acadêmico.
-- A sessão do usuário é armazenada em `localStorage`.
-- Em produção, o recomendado seria usar hash de senha (bcrypt) e tokens JWT.
+- A autenticação é simplificada (sem hash de senha / JWT) por ser projeto acadêmico.
+- A sessão é persistida com `AsyncStorage` (equivalente ao `localStorage` no celular).

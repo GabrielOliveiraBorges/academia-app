@@ -97,21 +97,21 @@
       "nome": "Treino A - Peito e Tríceps",
       "tipo": "Peito/Tríceps",
       "descricao": "Foco em hipertrofia de peito e tríceps",
-      "duracao_minutos": 80,
+      "duracao_minutos": 70,
       "usuario_id": "1",
       "personal_id": 3,
-      "data_criacao": "2026-04-19",
+      "data_criacao": "2026-04-28",
       "id": "1"
     },
     {
-      "id": "2",
       "nome": "Treino B - Costas e Bíceps",
-      "descricao": "Puxadas e rosca para hipertrofia",
-      "usuario_id": 1,
-      "personal_id": 3,
       "tipo": "Costas/Bíceps",
+      "descricao": "Puxadas e rosca para hipertrofia",
       "duracao_minutos": 55,
-      "data_criacao": "2025-03-01"
+      "usuario_id": "1",
+      "personal_id": 3,
+      "data_criacao": "2026-04-28",
+      "id": "2"
     },
     {
       "id": "3",
@@ -126,14 +126,14 @@
   ],
   "treino_exercicios": [
     {
-      "id": "1",
-      "treino_id": 1,
-      "exercicio_id": 1,
+      "treino_id": "1",
+      "exercicio_id": "1",
       "series": 4,
       "repeticoes": "10-12",
-      "carga_kg": 60,
+      "carga_kg": 20,
       "descanso_seg": 90,
-      "ordem": 1
+      "ordem": 1,
+      "id": "1"
     },
     {
       "id": "2",
@@ -376,6 +376,87 @@
       "concluido": true,
       "avaliacao": 5,
       "id": "E8RA8clCSlY"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "xyiDcnzT1B4",
+      "data_execucao": "2026-04-26",
+      "duracao_real": 65,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "CJ51wCb1dlw"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "2",
+      "data_execucao": "2026-04-26",
+      "duracao_real": 55,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "NvwFoOVyfuU"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "2",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 55,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "5Fm9ATH"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "2",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 55,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "bfR1e8b"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "DAZ7RCd",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 75,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "jZvPRjW"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "1",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 70,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "69325k6"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "JLIm1CV",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 90,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "SBK7bmM"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "2",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 55,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "3QN4sQZ"
+    },
+    {
+      "usuario_id": "1",
+      "treino_id": "1",
+      "data_execucao": "2026-04-28",
+      "duracao_real": 70,
+      "concluido": true,
+      "avaliacao": 5,
+      "id": "ZATzXkb"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
