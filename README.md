@@ -163,6 +163,7 @@ npm run test:report               # abre o relatório HTML
 - O [`playwright.config.js`](playwright.config.js) inicia automaticamente o
   `json-server` (porta 3000) e o Expo Web (porta 8081) via `webServer`.
 - As evidências (prints) são salvas em [`tests/evidencias/`](tests/evidencias/).
+- Os **vídeos** de execução (incl. um tour completo do app) ficam em [`tests/videos/`](tests/videos/).
 
 ## 🔐 Segurança (OWASP Top 10)
 

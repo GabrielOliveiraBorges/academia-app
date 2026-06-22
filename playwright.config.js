@@ -35,6 +35,7 @@ module.exports = defineConfig({
     viewport: { width: 420, height: 900 }, // proporção mobile (portrait)
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
+    video: { mode: 'on', size: { width: 420, height: 900 } },
     actionTimeout: 20_000,
     navigationTimeout: 60_000,
   },

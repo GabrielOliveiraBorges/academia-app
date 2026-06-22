@@ -45,6 +45,16 @@ npm run test:report
 | TC-12 | Abrir o formulário de adicionar exercício | FR-011 | `03-detalhes-navegacao.spec.js` | `TC-12-form-exercicio.png` | ✅ |
 | TC-13 | Cancelar a criação de treino volta ao painel | nav. | `03-detalhes-navegacao.spec.js` | `TC-13-cancelar-volta-painel.png` | ✅ |
 
+## 🎥 Vídeos de execução
+
+Além dos prints, o Playwright grava em **vídeo** a execução de cada teste
+(configurado em `playwright.config.js` com `video: 'on'`). Os vídeos ficam em
+[`tests/videos/`](videos/) no formato `.webm` (reproduzível em navegadores e no VLC):
+
+- **`DEMO-tour-completo.webm`** — tour contínuo do app (login → painel → criar
+  treino → detalhes → adicionar exercício). Ideal para apresentação.
+- **`TC-01..TC-13.webm`** — um vídeo por caso de teste.
+
 ## Observações técnicas
 
 - Os casos **TC-07** e **TC-09** alteram dados e fazem **limpeza automática**
