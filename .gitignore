@@ -16,3 +16,9 @@ web-build/
 # IDE
 .idea/
 .vscode/
+
+# Playwright (artefatos gerados — as evidências em tests/evidencias/ SÃO versionadas)
+test-results/
+tests/playwright-report/
+playwright/.cache/
+blob-report/

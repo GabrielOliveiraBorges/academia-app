@@ -31,8 +31,24 @@ academia-app/
 │       ├── DetalhesScreen.jsx    → Exercícios + concluir treino
 │       └── ExercicioFormScreen.jsx
 ├── database/
-│   └── schema.sql                → Modelagem SQL (referência)
-└── web-legacy/                   → Versão web antiga (HTML/CSS/JS)
+│   ├── schema.sql                → Modelagem SQL (referência)
+│   └── modelo-er.md              → Modelo Entidade-Relacionamento
+├── web-legacy/                   → Versão web antiga (HTML/CSS/JS)
+│
+│   ── Processo SDD (Spec-Driven Development) ──
+├── .specify/
+│   ├── memory/constitution.md    → Constituição (princípios do projeto)
+│   └── templates/                → Modelos de spec / plan / tasks
+├── .claude/commands/             → Comandos do fluxo SDD (/specify, /plan, ...)
+├── specs/001-fitapp-.../         → spec.md, plan.md, tasks.md da feature
+│
+│   ── Testes e Segurança ──
+├── playwright.config.js          → Config dos testes E2E (Expo Web + API)
+├── tests/                        → Casos de teste Playwright + evidências
+│   ├── *.spec.js                 → 13 casos de teste
+│   ├── CASOS-DE-TESTE.md         → Catálogo + mapa teste→requisito
+│   └── evidencias/               → Prints (evidências de execução)
+└── docs/SECURITY-OWASP.md        → Relatório de segurança OWASP Top 10
 ```
 
 ## 🚀 Como rodar
@@ -116,7 +132,45 @@ Tabelas (ver `database/schema.sql`):
 - `treino_exercicios` (N:N entre treinos e exercicios, com séries/reps/carga)
 - `historico_treinos` (registros de execução)
 
+## 🧭 Processo SDD (Spec-Driven Development)
+
+O projeto adota **Spec-Driven Development** (inspirado no GitHub Spec Kit):
+a especificação vem **antes** do código e governa o desenvolvimento.
+
+- **Constituição:** [`.specify/memory/constitution.md`](.specify/memory/constitution.md) — princípios inegociáveis.
+- **Templates:** [`.specify/templates/`](.specify/templates/) — modelos de `spec`, `plan` e `tasks`.
+- **Comandos do fluxo:** [`.claude/commands/`](.claude/commands/) — `/constitution`, `/specify`, `/clarify`, `/plan`, `/tasks`, `/analyze`, `/implement`.
+- **Especificação da feature:** [`specs/001-fitapp-gerenciamento-treinos/`](specs/001-fitapp-gerenciamento-treinos/)
+  - [`spec.md`](specs/001-fitapp-gerenciamento-treinos/spec.md) — requisitos (FR/NFR) e cenários.
+  - [`plan.md`](specs/001-fitapp-gerenciamento-treinos/plan.md) — arquitetura, contratos de API, estratégia de testes.
+  - [`tasks.md`](specs/001-fitapp-gerenciamento-treinos/tasks.md) — tarefas + **matriz de rastreabilidade** requisito→teste.
+
+**Fluxo:** `/constitution` → `/specify` → `/clarify` → `/plan` → `/tasks` → `/analyze` → `/implement`.
+
+## 🧪 Testes E2E (Playwright)
+
+São **13 casos de teste** (mínimo exigido: 10) com **evidências de print**,
+executados contra o **Expo Web**. O catálogo completo e o mapa
+teste→requisito estão em [`tests/CASOS-DE-TESTE.md`](tests/CASOS-DE-TESTE.md).
+
+```bash
+npm install
+npx playwright install chromium   # baixa o navegador (uma vez)
+npm test                          # sobe API + Expo Web e roda os testes
+npm run test:report               # abre o relatório HTML
+```
+
+- O [`playwright.config.js`](playwright.config.js) inicia automaticamente o
+  `json-server` (porta 3000) e o Expo Web (porta 8081) via `webServer`.
+- As evidências (prints) são salvas em [`tests/evidencias/`](tests/evidencias/).
+
+## 🔐 Segurança (OWASP Top 10)
+
+O relatório de segurança avalia o projeto contra o **OWASP Top 10 (2021)**,
+indicando o status de cada item (resolvido / não resolvido / parcial / N.A.):
+[`docs/SECURITY-OWASP.md`](docs/SECURITY-OWASP.md).
+
 ## 📌 Observações
 
-- A autenticação é simplificada (sem hash de senha / JWT) por ser projeto acadêmico.
+- A autenticação é simplificada (sem hash de senha / JWT) por ser projeto acadêmico — ver detalhes e plano de correção no [relatório OWASP](docs/SECURITY-OWASP.md).
 - A sessão é persistida com `AsyncStorage` (equivalente ao `localStorage` no celular).

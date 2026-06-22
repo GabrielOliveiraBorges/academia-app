@@ -1,4 +1,20 @@
-export const API_URL = 'http://192.168.100.10:3000';
+import { Platform } from 'react-native';
+
+// IPv4 da máquina onde roda o json-server (usado pelo Expo Go no celular).
+// Para descobrir: rode `ipconfig` (Windows) e use o Endereço IPv4.
+const IP_LAN = '192.168.100.10';
+
+function resolverApiUrl() {
+  // No navegador (Expo Web / testes Playwright), fala com o json-server no
+  // mesmo host (localhost), dispensando edição manual de IP.
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    return `http://${window.location.hostname}:3000`;
+  }
+  // No celular via Expo Go, é preciso o IP da máquina na mesma rede Wi-Fi.
+  return `http://${IP_LAN}:3000`;
+}
+
+export const API_URL = resolverApiUrl();
 
 async function request(path, options = {}) {
   const resposta = await fetch(`${API_URL}${path}`, {
