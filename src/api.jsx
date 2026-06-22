@@ -1,17 +1,37 @@
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 
-// IPv4 da máquina onde roda o json-server (usado pelo Expo Go no celular).
+// Fallback manual: IPv4 da máquina onde roda o json-server.
+// Só é usado no celular se a detecção automática abaixo falhar.
 // Para descobrir: rode `ipconfig` (Windows) e use o Endereço IPv4.
 const IP_LAN = '192.168.100.10';
 
+// No Expo Go, descobre o IP da máquina a partir do próprio servidor Expo
+// (o mesmo host que o celular usou para achar o Metro). Assim o app funciona
+// em QUALQUER Wi-Fi, sem precisar editar o IP manualmente.
+function hostDoExpo() {
+  const candidatos = [
+    Constants.expoConfig?.hostUri,
+    Constants.expoGoConfig?.debuggerHost,
+    Constants.manifest2?.extra?.expoGo?.debuggerHost,
+    Constants.manifest?.debuggerHost,
+  ];
+  for (const c of candidatos) {
+    if (typeof c === 'string' && c.length > 0) {
+      return c.split(':')[0]; // "192.168.0.5:8081" -> "192.168.0.5"
+    }
+  }
+  return null;
+}
+
 function resolverApiUrl() {
-  // No navegador (Expo Web / testes Playwright), fala com o json-server no
-  // mesmo host (localhost), dispensando edição manual de IP.
+  // No navegador (Expo Web / testes Playwright): mesmo host, porta 3000.
   if (Platform.OS === 'web' && typeof window !== 'undefined') {
     return `http://${window.location.hostname}:3000`;
   }
-  // No celular via Expo Go, é preciso o IP da máquina na mesma rede Wi-Fi.
-  return `http://${IP_LAN}:3000`;
+  // No celular (Expo Go): IP detectado automaticamente; senão, o fallback.
+  const host = hostDoExpo() || IP_LAN;
+  return `http://${host}:3000`;
 }
 
 export const API_URL = resolverApiUrl();
