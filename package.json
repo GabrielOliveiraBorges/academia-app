@@ -4,9 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
+    "start:offline": "expo start --offline",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "web:offline": "expo start --web --offline",
     "api": "npx json-server@0.17.4 --watch db.json --port 3000 --host 0.0.0.0",
     "test": "playwright test --project=chromium",
     "test:headed": "playwright test --project=chromium --headed",
